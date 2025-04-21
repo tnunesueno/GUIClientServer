@@ -29,7 +29,7 @@ public class ServerConnectorThread implements Runnable{
 
                 ShoebQueue myData = new ShoebQueue();
                 ReaderThread read1 = new ReaderThread(client, myData, true);
-                WriterThread write1 = new WriterThread(client, myData, true);
+                WriterThread write1 = new WriterThread(client, myData, true, null);
                 Thread reader = new Thread(read1);
                 Thread writer = new Thread(write1);
                 // start both threads for each client and then continues

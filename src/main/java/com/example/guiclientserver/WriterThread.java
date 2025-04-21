@@ -9,12 +9,14 @@ public class WriterThread implements Runnable{
     PrintWriter out;
     ShoebQueue myData;
     Boolean isServer;
+    HelloController controller;
 
-    public WriterThread(Socket socket, ShoebQueue myData, Boolean isServer) throws IOException {
+    public WriterThread(Socket socket, ShoebQueue myData, Boolean isServer, HelloController controller) throws IOException {
         this.socket = socket;
         this.myData = myData;
         out = new PrintWriter(socket.getOutputStream(), true);
         this.isServer =isServer;
+        this.controller = controller;
     }
 
     public void run() {
@@ -30,6 +32,7 @@ public class WriterThread implements Runnable{
             } else {
                 out.println(message);
                 System.out.println("CLIENT WROTE: " + message);
+                controller.recieve(message.toString());
             }
         }
 

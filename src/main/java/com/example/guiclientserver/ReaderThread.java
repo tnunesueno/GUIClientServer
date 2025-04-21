@@ -34,8 +34,6 @@ public class ReaderThread implements Runnable{
                     succsess = myData.put(message);
                 }
             }
-
-           HelloController.recieve();
         }
     }
 }
