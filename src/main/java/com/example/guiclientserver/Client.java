@@ -10,7 +10,7 @@ public class Client {
         Socket socket = new Socket(hostname, 12349);
 
         ShoebQueue myData = new ShoebQueue();
-        ReaderThread read1 = new ReaderThread(socket, myData, false);
+        ReaderThread read1 = new ReaderThread(socket, myData, false, null);
         WriterThread write1 = new WriterThread(socket, myData, false, null);
         Thread reader = new Thread(read1);
         Thread writer = new Thread(write1);

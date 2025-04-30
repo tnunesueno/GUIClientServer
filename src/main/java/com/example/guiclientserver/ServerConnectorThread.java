@@ -28,7 +28,7 @@ public class ServerConnectorThread implements Runnable{
                 client = serverSocket.accept(); // blocking api
 
                 ShoebQueue myData = new ShoebQueue();
-                ReaderThread read1 = new ReaderThread(client, myData, true);
+                ReaderThread read1 = new ReaderThread(client, myData, true, null);
                 WriterThread write1 = new WriterThread(client, myData, true, null);
                 Thread reader = new Thread(read1);
                 Thread writer = new Thread(write1);

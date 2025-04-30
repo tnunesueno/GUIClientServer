@@ -5,17 +5,17 @@ import java.io.PrintWriter;
 import java.net.Socket;
 
 public class WriterThread implements Runnable{
-    Socket socket;
+    Socket socket;// maybe get rid of this so that we can use the controller connector thread
     PrintWriter out;
     ShoebQueue myData;
     Boolean isServer;
-    HelloController controller;
+    ClientController controller;
 
-    public WriterThread(Socket socket, ShoebQueue myData, Boolean isServer, HelloController controller) throws IOException {
+    public WriterThread(Socket socket, ShoebQueue myData, Boolean isServer, ClientController controller) throws IOException {
         this.socket = socket;
         this.myData = myData;
         out = new PrintWriter(socket.getOutputStream(), true);
-        this.isServer =isServer;
+        this.isServer = isServer;
         this.controller = controller;
     }
 
@@ -28,11 +28,12 @@ public class WriterThread implements Runnable{
 
             if (isServer) {
                 out.println("LOL it was funny when you wrote: " + message);
-                System.out.println("SERVER WROTE: LOL it was funny when you wrote: " + message);
+                controller.updateViewWithNewMsg(message.toString());
             } else {
-                out.println(message);
                 System.out.println("CLIENT WROTE: " + message);
-                controller.recieve(message.toString());
+                // im not sure if this goes here - updateViewWithNewMsg does put it on the gui
+                // no idea where the lol comes from
+                controller.updateViewWithNewMsg(message.toString());
             }
         }
 

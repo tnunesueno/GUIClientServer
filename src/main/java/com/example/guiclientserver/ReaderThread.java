@@ -10,12 +10,14 @@ public class ReaderThread implements Runnable{
     ShoebQueue myData;
     BufferedReader in;
     Boolean isServer;
+    ClientController controller;
 
-    public ReaderThread(Socket socket, ShoebQueue myData, Boolean isServer) throws IOException {
+    public ReaderThread(Socket socket, ShoebQueue myData, Boolean isServer, ClientController controller) throws IOException {
         this.socket = socket;
         this.myData = myData;
         this.isServer = isServer;
         in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        this.controller = controller;
     }
 
     public void run(){
@@ -28,12 +30,10 @@ public class ReaderThread implements Runnable{
             } catch (IOException e) {
                 System.out.println("Reader error: " + e);
             }
-            if (isServer) {
-                boolean succsess = myData.put(message);
-                while (!succsess) {
-                    succsess = myData.put(message);
+            boolean succsess = myData.put(message);
+            while (!succsess) {
+                succsess = myData.put(message);
                 }
             }
         }
     }
-}
